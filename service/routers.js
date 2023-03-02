@@ -25,12 +25,13 @@ router.get("/", (req, res) => {
 
 // only "started","pending","completed" values are allowed in the state.
 router.post("/", (req, res) => {
-    const Payload = {
+  const date = new Date().toISOString().slice(0, 19).replace('T', ' ')  
+  const Payload = {
         Task: req.body.Task,
         Description: req.body.Description,
         State: req.body.State
     };
-    db.query(`INSERT INTO todo(Task , Description , Date , State) VALUES ("${Payload.Task}", "${Payload.Description}", NOW() , "${Payload.State}");`, (err, rows, fields) => {
+    db.query(`INSERT INTO todo(Task , Description , Date , State) VALUES ("${Payload.Task}", "${Payload.Description}", "${date}" , "${Payload.State}");`, (err, rows, fields) => {
         if (!err){
           res.json(rows);
         }
